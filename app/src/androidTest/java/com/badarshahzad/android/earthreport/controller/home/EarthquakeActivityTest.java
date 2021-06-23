@@ -155,7 +155,7 @@ public class EarthquakeActivityTest {
         viewPager2.perform(swipeRight());
     }
 
-    @Test
+    /*@Test
     public void homeSearchTest() {
         // Added a sleep statement to match the app's execution delay.
         // The recommended way to handle such scenarios is to use Espresso idling resources:
@@ -286,9 +286,9 @@ public class EarthquakeActivityTest {
 
         pressBack();
 
-    }
+    }*/
 
-    @Test
+    /*@Test
     public void homeToolBarAddAlertTest() {
         // Added a sleep statement to match the app's execution delay.
         // The recommended way to handle such scenarios is to use Espresso idling resources:
@@ -319,7 +319,7 @@ public class EarthquakeActivityTest {
                                 4),
                         isDisplayed()));
         appCompatButton.perform(click());
-    }
+    }*/
 
     @Test
     public void homeToolBookmarkTest() {
@@ -431,7 +431,7 @@ public class EarthquakeActivityTest {
 
     //Setting Test
 
-    @Test
+   /* @Test
     public void earthquakeListFilterTest() {
         earthquakeListTest();
         ViewInteraction actionMenuItemView2 = onView(
@@ -453,7 +453,7 @@ public class EarthquakeActivityTest {
                                 6),
                         isDisplayed()));
         appCompatButton.perform(click());
-    }
+    }*/
 
     @Test
     public void settingTest() {

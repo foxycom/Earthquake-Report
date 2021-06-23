@@ -52,7 +52,7 @@ public class HomeToolBarTest {
         };
     }
 
-    @Test
+    /*@Test
     public void homeToolBarAddAlertTest() {
         // Added a sleep statement to match the app's execution delay.
         // The recommended way to handle such scenarios is to use Espresso idling resources:
@@ -83,7 +83,7 @@ public class HomeToolBarTest {
                                 4),
                         isDisplayed()));
         appCompatButton.perform(click());
-    }
+    }*/
 
     @Test
     public void homeToolBookmarkTest() {
