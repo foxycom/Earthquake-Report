@@ -10,5 +10,5 @@ make_permissions =
 make_instr_skip_classes = com.badarshahzad.android.earthreport.R
 make_instr_filter_packages = java.io
 make_instr_filter_classes = java.lang.StringBuilder
-make_carving_filter_methods = sdfdf,fsdfsd
+make_carving_filter_methods =
 make_trace_multiple_threads = false
