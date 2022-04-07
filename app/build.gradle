@@ -6,8 +6,39 @@ if (jacocoEnabled.toBoolean()) {
     apply from: rootProject.file("jacoco.gradle")
 }
 
+
+// General switch for tests types this control report generation but not yet unit test selection - TODO Make this a flag
+def carvedTests = project.hasProperty('carvedTests')// ? project.getProperty('carvedTests') : false //Default value false
+
+def carvedTestSrcDir = "src/allCarvedTest"
+def testReportPrefix = "${buildDir}/carvedTest/testExecution"
+def coverageReportPrefix = "${buildDir}/carvedTest/coverage"
+
+if (carvedTests) {
+    if (project.hasProperty('testName')) {
+        def testName = project.getProperty('testName')
+        println ""
+        println "* Processing Carved Test ${testName}"
+        println ""
+
+        carvedTestSrcDir = "src/carvedTest/${testName}"
+
+        testReportPrefix = "${buildDir}/carvedTest/${testName}/testExecution"
+        coverageReportPrefix = "${buildDir}/carvedTest/${testName}/coverage"
+    }
+}
+
 android {
     compileSdkVersion 27
+
+    // Change the src folder for carved tests
+    sourceSets {
+        test {
+            if (carvedTests) {
+                java.srcDirs = ["$carvedTestSrcDir"]
+            }
+        }
+    }
 
     defaultConfig {
         applicationId 'com.badarshahzad.android.earthreport'
@@ -31,6 +62,45 @@ android {
         }
     }
     productFlavors {
+    }
+
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
+
+        animationsDisabled true
+
+        unitTests.all {
+
+            jvmArgs "-Xmx2g"
+
+            // Nices output on the console/logs
+            testLogging {
+                events "passed", "skipped", "failed", "standardOut", "standardError"
+                outputs.upToDateWhen { false }
+                showStandardStreams = true
+            }
+
+            test {
+                //Get last path of default set path.
+                def junitXmlTestTaskName = file("$reports.junitXml.destination").name
+                def htmlTestTaskName = file("$reports.html.destination").name
+
+                if (carvedTests) {
+                    // Just use the same?
+                    reports.junitXml.destination = file("$testReportPrefix/$junitXmlTestTaskName")
+                    reports.html.destination = file("$testReportPrefix/$junitXmlTestTaskName")
+                }
+
+                filter {
+                    //specific test method
+                    if (project.hasProperty('carvedTestsFilter')){
+                        includeTestsMatching project.carvedTestsFilter
+                    }
+                }
+            }
+        }
     }
 
 }
@@ -85,5 +155,7 @@ dependencies {
      */
     //This library is helping me to add PreferenceFragment support.v4
     implementation 'com.github.machinarius:preferencefragment:0.1.1'
+
+
 }
 apply plugin: 'com.google.gms.google-services'
